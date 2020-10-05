@@ -1,4 +1,3 @@
-
 defmodule SubmitBlock.Transaction.Signature do
   @moduledoc """
   Defines helper functions for signing and getting the signature

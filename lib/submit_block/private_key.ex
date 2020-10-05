@@ -31,8 +31,9 @@ defmodule SubmitBlock.PrivateKey do
   @spec load_raw_hex(String.t()) :: binary()
   defp load_raw_hex("0x" <> hex_data), do: load_raw_hex(hex_data)
 
-  defp load_raw_hex(hex_data) when Integer.is_odd(byte_size(hex_data)),
-    do: load_raw_hex("0" <> hex_data)
+  defp load_raw_hex(hex_data) when Integer.is_odd(byte_size(hex_data)) do
+    load_raw_hex("0" <> hex_data)
+  end
 
   defp load_raw_hex(hex_data) do
     Base.decode16!(hex_data, case: :mixed)

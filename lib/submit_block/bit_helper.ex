@@ -1,4 +1,3 @@
-
 defmodule SubmitBlock.BitHelper do
   @moduledoc """
   Helpers for common operations on the blockchain.
