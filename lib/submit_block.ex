@@ -3,12 +3,12 @@ defmodule SubmitBlock do
   alias SubmitBlock.PrivateKey
   alias SubmitBlock.Transaction.Signature
 
-  def submit_block(hash, nonce, gas_price, contract, opts) do
+  def submit_block(block_root, nonce, gas_price, contract, opts) do
     private_key = Keyword.fetch!(opts, :private_key)
     url = = Keyword.fetch!(opts, :url)
     to = contract
     signature = "submitBlock(bytes32)"
-    args = [hash]
+    args = [block_root]
     abi_encoded_data = ABI.encode(signature, args)
     opts = [nonce: nonce, gasPrice: gas_price, value: 0, gas: 100_000]
     [nonce: nonce, gasPrice: gas_price, value: value, gas: gas_limit] = opts
