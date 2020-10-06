@@ -25,7 +25,9 @@ defmodule SubmitBlock.BitHelper do
   """
   @spec kec(binary()) :: keccak_hash
   def kec(data) do
-    :keccakf1600.sha3_256(data)
+    {:ok, hash} = ExKeccak.hash_256(data)
+
+    hash
   end
 
   @doc """

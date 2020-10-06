@@ -5,7 +5,7 @@ defmodule SubmitBlock do
 
   def submit_block(block_root, nonce, gas_price, contract, opts) do
     private_key = Keyword.fetch!(opts, :private_key)
-    url = = Keyword.fetch!(opts, :url)
+    url = Keyword.fetch!(opts, :url)
     to = contract
     signature = "submitBlock(bytes32)"
     args = [block_root]
