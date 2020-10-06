@@ -28,6 +28,4 @@ jobs:
           export PATH="${HOME}/.cargo/bin:${PATH}"
           rustc -V      
       - run: mix deps.get
-      - run: |
-          export PATH="${HOME}/.cargo/bin:${PATH}"
-          mix test
+      - run: mix test
