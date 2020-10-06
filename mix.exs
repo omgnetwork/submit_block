@@ -23,7 +23,8 @@ defmodule SubmitBlock.MixProject do
     [
       {:ex_abi, "~> 0.5.1"},
       {:ex_rlp, "~> 0.5.3"},
-      {:ethereumex, "~> 0.6.4"}
+      {:ethereumex, "~> 0.6.4"},
+      {:ex_secp256k1, "~> 0.1.2"}
     ]
   end
 end

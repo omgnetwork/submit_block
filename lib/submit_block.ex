@@ -25,7 +25,7 @@ defmodule SubmitBlock do
         value: value
       }
       |> Signature.sign_transaction(private_key)
-      |> Transaction.serialize()
+      |> Transaction.serialize(true)
       |> ExRLP.encode()
       |> Base.encode16(case: :lower)
 

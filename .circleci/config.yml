@@ -1,0 +1,25 @@
+version: 2.1
+
+executors:
+  metal:
+    docker:
+      - image: circleci/elixir:1.10.2
+    working_directory: ~/src
+
+jobs:
+  barebuild:
+    executor: metal
+    environment:
+      MIX_ENV: test
+    steps:
+      - checkout
+      - run: mix deps.get
+      - run: mix compile
+      - run: mix test
+
+workflows:
+  version: 2
+  
+  build:
+    jobs:
+      - barebuild

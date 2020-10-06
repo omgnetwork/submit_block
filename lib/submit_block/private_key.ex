@@ -18,7 +18,7 @@ defmodule SubmitBlock.PrivateKey do
   """
   require Integer
 
-  def get() do
+  def get(_private_key) do
     private_key = System.get_env("PRIVATE_KEY")
     maybe_hex(private_key)
   end

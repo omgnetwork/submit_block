@@ -62,20 +62,20 @@ defmodule SubmitBlock.Transaction do
 
   ## Examples
 
-      iex> OMG.Eth.Blockchain.Transaction.serialize(%OMG.Eth.Blockchain.Transaction{nonce: 5, gas_price: 6, gas_limit: 7, to: <<1::160>>, value: 8, v: 27, r: 9, s: 10, data: "hi"})
+      iex> SubmitBlock.Transaction.serialize(%SubmitBlock.Transaction{nonce: 5, gas_price: 6, gas_limit: 7, to: <<1::160>>, value: 8, v: 27, r: 9, s: 10, data: "hi"}, true)
       [<<5>>, <<6>>, <<7>>, <<1::160>>, <<8>>, "hi", <<27>>, <<9>>, <<10>>]
 
-      iex> OMG.Eth.Blockchain.Transaction.serialize(%OMG.Eth.Blockchain.Transaction{nonce: 5, gas_price: 6, gas_limit: 7, to: <<>>, value: 8, v: 27, r: 9, s: 10, init: <<1, 2, 3>>})
+      iex> SubmitBlock.Transaction.serialize(%SubmitBlock.Transaction{nonce: 5, gas_price: 6, gas_limit: 7, to: <<>>, value: 8, v: 27, r: 9, s: 10, init: <<1, 2, 3>>}, true)
       [<<5>>, <<6>>, <<7>>, <<>>, <<8>>, <<1, 2, 3>>, <<27>>, <<9>>, <<10>>]
 
-      iex> OMG.Eth.Blockchain.Transaction.serialize(%OMG.Eth.Blockchain.Transaction{nonce: 5, gas_price: 6, gas_limit: 7, to: <<>>, value: 8, v: 27, r: 9, s: 10, init: <<1, 2, 3>>}, false)
+      iex> SubmitBlock.Transaction.serialize(%SubmitBlock.Transaction{nonce: 5, gas_price: 6, gas_limit: 7, to: <<>>, value: 8, v: 27, r: 9, s: 10, init: <<1, 2, 3>>}, false)
       [<<5>>, <<6>>, <<7>>, <<>>, <<8>>, <<1, 2, 3>>]
 
-      iex> OMG.Eth.Blockchain.Transaction.serialize(%OMG.Eth.Blockchain.Transaction{ data: "", gas_limit: 21000, gas_price: 20000000000, init: "", nonce: 9, r: 0, s: 0, to: "55555555555555555555", v: 1, value: 1000000000000000000 })
+      iex> SubmitBlock.Transaction.serialize(%SubmitBlock.Transaction{ data: "", gas_limit: 21000, gas_price: 20000000000, init: "", nonce: 9, r: 0, s: 0, to: "55555555555555555555", v: 1, value: 1000000000000000000 }, true)
       ["\t", <<4, 168, 23, 200, 0>>, "R\b", "55555555555555555555", <<13, 224, 182, 179, 167, 100, 0, 0>>, "", <<1>>, "", ""]
   """
-  @spec serialize(t) :: ExRLP.t()
-  def serialize(trx, include_vrs \\ true) do
+  @spec serialize(t, boolean()) :: ExRLP.t()
+  def serialize(trx, include_vrs) do
     base = [
       BitHelper.encode_unsigned(trx.nonce),
       BitHelper.encode_unsigned(trx.gas_price),
