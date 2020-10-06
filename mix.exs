@@ -21,9 +21,9 @@ defmodule SubmitBlock.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:ex_abi, "~> 0.4"},
+      {:ex_abi, "~> 0.5.1"},
       {:ex_rlp, "~> 0.5.3"},
-      {:ethereumex, "~> 0.6.0"}
+      {:ethereumex, "~> 0.6.4"}
     ]
   end
 end
