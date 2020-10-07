@@ -4,9 +4,8 @@
 version: 2
 jobs:
   build:
-    docker:
-      # specify the version here
-      - image: circleci/elixir:1.10
+    machine:
+      image: ubuntu-1604:201903-01
 
       # Specify service dependencies here if necessary
       # CircleCI maintains a library of pre-built images
@@ -16,10 +15,26 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
-
-      # specify any bash command here prefixed with `run: `
-      - run: mix local.hex --force
-      - run: mix local.rebar --force
+      - restore_cache:
+          key: v6-asdf-install
+      - run:
+          name: Install Erlang and Elixir
+          command: |
+            [ -d ~/.asdf-vm ] || git clone https://github.com/asdf-vm/asdf.git ~/.asdf-vm --branch v0.7.8
+            echo 'source ~/.asdf-vm/asdf.sh' >> $BASH_ENV
+            source $BASH_ENV
+            asdf update
+            asdf plugin-add erlang || asdf plugin-update erlang
+            asdf plugin-add elixir || asdf plugin-update elixir
+            asdf install
+            mix local.rebar --force && mix local.hex --force
+          no_output_timeout: 2400
+      - save_cache:
+          key: v6-asdf-install
+          paths:
+            - ~/.asdf
+            - ~/.asdf-vm
+      - run: make init-contracts
       - run: |
           curl https://sh.rustup.rs -sSf -o install_rust.sh
           chmod +x install_rust.sh
@@ -28,7 +43,6 @@ jobs:
           export PATH="${HOME}/.cargo/bin:${PATH}"
           rustc -V      
       - run: mix deps.get
-      - run: make init-contracts
       - run: |
           export PATH="${HOME}/.cargo/bin:${PATH}"
           mix test
