@@ -1,10 +1,30 @@
+# Copyright 2019-2020 OmiseGO Pte Ltd
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 defmodule SubmitBlock do
   alias SubmitBlock.Transaction
   alias SubmitBlock.PrivateKey
   alias SubmitBlock.Transaction.Signature
 
   def submit_block(block_root, nonce, gas_price, contract, opts) do
-    private_key = Keyword.fetch!(opts, :private_key)
+    private_key =
+      :erlang.apply(
+        Keyword.fetch!(opts, :private_key_module),
+        Keyword.fetch!(opts, :private_key_function),
+        Keyword.fetch!(opts, :private_key_args)
+      )
+
     url = Keyword.fetch!(opts, :url)
     to = contract
     signature = "submitBlock(bytes32)"
