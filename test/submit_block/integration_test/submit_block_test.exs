@@ -39,12 +39,13 @@ defmodule SubmitBlockTest do
 
     Process.sleep(5000)
     # bytes of "block_root"
-    assert get_external_data(
-             contracts["CONTRACT_ADDRESS_PLASMA_FRAMEWORK"],
+    assert contracts["CONTRACT_ADDRESS_PLASMA_FRAMEWORK"]
+           |> get_external_data(
              "blocks(uint256)",
              [1000],
              url: "http://localhost:#{port}"
-           ) ==
+           )
+           |> Map.get("block_hash") ==
              <<98, 108, 111, 99, 107, 95, 114, 111, 111, 116, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
                0, 0, 0, 0, 0, 0, 0, 0, 0, 0>>
   end
