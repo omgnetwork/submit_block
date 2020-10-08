@@ -19,12 +19,13 @@ defmodule SubmitBlockTest do
     contracts: contracts
   } do
     System.put_env("PK", private_key())
-
+    nonce = 1
+    gas_price = 1000
     IO.inspect(
       SubmitBlock.submit_block(
         "block_root",
-        0,
-        1000,
+        nonce,
+        gas_price,
         from_hex(contracts["CONTRACT_ADDRESS_PLASMA_FRAMEWORK"]),
         url: "http://localhost:#{port}",
         private_key_module: System,
