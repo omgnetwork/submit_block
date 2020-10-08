@@ -25,15 +25,16 @@ defmodule SubmitBlockTest do
         "block_root",
         0,
         1000,
-        contracts["CONTRACT_ADDRESS_PLASMA_FRAMEWORK"],
+        from_hex(contracts["CONTRACT_ADDRESS_PLASMA_FRAMEWORK"]),
         url: "http://localhost:#{port}",
         private_key_module: System,
         private_key_function: :get_env,
         private_key_args: ["PK"]
       )
     )
-IO.inspect "here"
   end
+  
+  defp from_hex("0x" <> encoded), do: Base.decode16!(encoded, case: :lower)
 
   defp private_key() do
     "0x7f30f140fd4724519e5017c0895f158d68bbbe4a81c0c10dbb25a0006e348807"
