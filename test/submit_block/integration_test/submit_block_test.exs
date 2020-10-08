@@ -24,7 +24,7 @@ defmodule SubmitBlockTest do
     plasma_framework = from_hex(contracts["CONTRACT_ADDRESS_PLASMA_FRAMEWORK"])
 
     assert SubmitBlock.submit_block(
-             "block_root",
+             "block_root111",
              nonce,
              gas_price,
              plasma_framework,
@@ -36,10 +36,17 @@ defmodule SubmitBlockTest do
              {:ok,
               <<131, 240, 72, 252, 140, 51, 1, 176, 75, 116, 221, 74, 63, 27, 57, 2, 5, 110, 128,
                 4, 129, 124, 204, 89, 245, 135, 186, 240, 41, 50, 149, 133>>}
-Process.sleep(5000)
-    IO.inspect get_external_data(contracts["CONTRACT_ADDRESS_PLASMA_FRAMEWORK"], "blocks(uint256)", [1000], url: "http://localhost:#{port}")
-IO.inspect get_external_data(contracts["CONTRACT_ADDRESS_PLASMA_FRAMEWORK"], "blocks(uint256)", [2000], url: "http://localhost:#{port}")
-IO.inspect get_external_data(contracts["CONTRACT_ADDRESS_PLASMA_FRAMEWORK"], "blocks(uint256)", [0], url: "http://localhost:#{port}")
+
+    Process.sleep(5000)
+    # bytes of "block_root"
+    assert get_external_data(
+             contracts["CONTRACT_ADDRESS_PLASMA_FRAMEWORK"],
+             "blocks(uint256)",
+             [1000],
+             url: "http://localhost:#{port}"
+           ) ==
+             <<98, 108, 111, 99, 107, 95, 114, 111, 111, 116, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+               0, 0, 0, 0, 0, 0, 0, 0, 0, 0>>
   end
 
   defp from_hex("0x" <> encoded), do: Base.decode16!(encoded, case: :lower)
