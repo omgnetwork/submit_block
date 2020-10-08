@@ -37,7 +37,7 @@ defmodule SubmitBlockTest do
               <<131, 240, 72, 252, 140, 51, 1, 176, 75, 116, 221, 74, 63, 27, 57, 2, 5, 110, 128,
                 4, 129, 124, 204, 89, 245, 135, 186, 240, 41, 50, 149, 133>>}
 
-    IO.inspect get_external_data(plasma_framework, "blocks(uint256)", [1000])
+    IO.inspect get_external_data(contracts["CONTRACT_ADDRESS_PLASMA_FRAMEWORK"], "blocks(uint256)", [1000])
   end
 
   defp from_hex("0x" <> encoded), do: Base.decode16!(encoded, case: :lower)
