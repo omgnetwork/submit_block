@@ -24,7 +24,7 @@ defmodule SubmitBlockTest do
     plasma_framework = from_hex(contracts["CONTRACT_ADDRESS_PLASMA_FRAMEWORK"])
 
     assert SubmitBlock.submit_block(
-             "block_root111",
+             "block_root",
              nonce,
              gas_price,
              plasma_framework,
