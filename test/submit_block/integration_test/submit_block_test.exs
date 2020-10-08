@@ -76,7 +76,7 @@ defmodule SubmitBlockTest do
   defp get_external_data(address, signature, params, opts) do
     data = signature |> ABI.encode(params) |> to_hex()
 
-    {:ok, data} = Ethereumex.HttpClient.eth_call(%{to: address, data: data}, opts)
+    {:ok, data} = Ethereumex.HttpClient.eth_call(%{to: address, data: data}, "latest", opts)
 
     decode_function(data, signature)
   end
