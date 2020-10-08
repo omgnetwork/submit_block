@@ -17,6 +17,7 @@ defmodule SubmitBlock.Geth do
     Interaction with docker's geth instance
   """
   use GenServer
+  require Logger
   @docker_engine_api "v1.39"
 
   def start(port) do
@@ -34,7 +35,6 @@ defmodule SubmitBlock.Geth do
   end
 
   def handle_info({:EXIT, msg, :normal}, state) do
-
     case :erlang.is_port(msg) do
       true ->
         {:noreply, state}
@@ -85,15 +85,17 @@ defmodule SubmitBlock.Geth do
 
   defp wait(port) do
     call = Ethereumex.HttpClient.web3_client_version(url: "http://127.0.0.1:#{port}")
-    IO.inspect(call)
+    Logger.info(inspect(call))
 
     case call do
       {:error, :closed} ->
         Process.sleep(500)
         wait(port)
+
       {:error, :econnrefused} ->
         Process.sleep(500)
         wait(port)
+
       _ ->
         :ok
     end
