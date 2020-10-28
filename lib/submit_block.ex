@@ -17,6 +17,14 @@ defmodule SubmitBlock do
   alias SubmitBlock.PrivateKey
   alias SubmitBlock.Transaction.Signature
 
+  def opts() do
+    [:private_key, :url]
+  end
+
+  def enterprise() do
+    0
+  end
+
   def submit_block(block_root, nonce, gas_price, contract, opts) do
     private_key =
       :erlang.apply(
