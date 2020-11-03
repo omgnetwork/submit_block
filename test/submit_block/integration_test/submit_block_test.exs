@@ -18,10 +18,10 @@ defmodule SubmitBlockTest do
     port: port,
     contracts: contracts
   } do
-    System.put_env("PK", private_key())
     nonce = 1
     gas_price = 1000
     plasma_framework = from_hex(contracts["CONTRACT_ADDRESS_PLASMA_FRAMEWORK"])
+    private_key = private_key()
 
     assert SubmitBlock.submit_block(
              "block_root",
@@ -29,9 +29,7 @@ defmodule SubmitBlockTest do
              gas_price,
              plasma_framework,
              url: "http://localhost:#{port}",
-             private_key_module: System,
-             private_key_function: :get_env,
-             private_key_args: ["PK"]
+             private_key: private_key
            ) ==
              {:ok,
               <<131, 240, 72, 252, 140, 51, 1, 176, 75, 116, 221, 74, 63, 27, 57, 2, 5, 110, 128,
