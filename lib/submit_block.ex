@@ -26,13 +26,7 @@ defmodule SubmitBlock do
   end
 
   def submit_block(block_root, nonce, gas_price, contract, opts) do
-    private_key =
-      :erlang.apply(
-        Keyword.fetch!(opts, :private_key_module),
-        Keyword.fetch!(opts, :private_key_function),
-        Keyword.fetch!(opts, :private_key_args)
-      )
-
+    private_key = Keyword.fetch!(opts, :private_key)
     url = Keyword.fetch!(opts, :url)
     to = contract
     signature = "submitBlock(bytes32)"
