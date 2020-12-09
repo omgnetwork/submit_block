@@ -25,6 +25,18 @@ defmodule SubmitBlock do
     0
   end
 
+  def submit_block(block_root, nonce, gas_price, "0x" <> _ = contract, opts) do
+    submit_block(block_root, nonce, gas_price, contract |> String.downcase() |> from_hex(), opts)
+  end
+
+  def submit_block(block_root, nonce, gas_price, contract, opts) when not is_integer(nonce) do
+    submit_block(block_root, String.to_integer(nonce), gas_price, contract, opts)
+  end
+
+  def submit_block(block_root, nonce, gas_price, contract, opts) when not is_integer(gas_price) do
+    submit_block(block_root, nonce, String.to_integer(gas_price), contract, opts)
+  end
+
   def submit_block(block_root, nonce, gas_price, contract, opts) do
     private_key = Keyword.fetch!(opts, :private_key)
     url = Keyword.fetch!(opts, :url)

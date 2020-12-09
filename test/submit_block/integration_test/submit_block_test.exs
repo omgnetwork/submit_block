@@ -20,7 +20,7 @@ defmodule SubmitBlockTest do
   } do
     nonce = 1
     gas_price = 1000
-    plasma_framework = from_hex(contracts["CONTRACT_ADDRESS_PLASMA_FRAMEWORK"])
+    plasma_framework = contracts["CONTRACT_ADDRESS_PLASMA_FRAMEWORK"]
     private_key = private_key()
 
     assert SubmitBlock.submit_block(
